@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NPCAlerted : MonoBehaviour
+{
+    // on trigger method for tagged NPC
+    void OnTriggerEnter(Collider npc)
+    {
+        if (npc.tag == "NPC")
+        {
+            // changing animation and speed of NPC when gun is drawn
+            npc.GetComponent<Animator>().Play("Running");
+            npc.GetComponent<NavMeshAgent>().speed = 7.5f;
+            // changing animation and speed of NPC when gun is drawn for flee mode form other script
+            NPCAI.fleeMode = true;
+        }
+
+    }
+
+}
