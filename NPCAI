@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+public class NPCAI : MonoBehaviour
+{
+    // my first vars is where ther NPC will walk-set specific destination where they can walk
+    public GameObject destinationPoint;
+    // not public so i can attach a componenent to a variable, so done as default and not in inspector
+    NavMeshAgent theAgent;
+    // bool for fleeing and controled from another script
+    public static bool fleeMode = false;
+    // the destination object (Cube) created in inspector
+    public GameObject fleeDest;
+    //helpme fx for NPC
+    public AudioSource helpMeFX;
+    // need bool so we trigger the flee mode cycle once and not loop it
+    public bool isFleeing = false;
+
+    void Start()
+    {
+        // i can attach the navmesh componenent to variable
+        theAgent = GetComponent<NavMeshAgent>();
+    }
+
+    // set the destination of where he needs to get to
+    void Update()
+    {
+        if (fleeMode == false)
+        {
+            // declare and set to geamobject and tell it to follow any destination route to position it needs to get to
+            theAgent.SetDestination(destinationPoint.transform.position);
+        }
+        else
+        {
+            // declare and set to geamobject for the fleeing destination route to position it needs to get to when fleemode changed to true
+            theAgent.SetDestination(fleeDest.transform.position);
+
+            // is the NPC already fleeing|?
+            if (isFleeing == false)
+            {
+                //turn it on
+                isFleeing = true;
+                //need to activate coroutine below
+                StartCoroutine(FleeingNPC());
+            }
+        }
+    }
+    // need coroutine to help with feeemode tranistion and play help me FX
+    IEnumerator FleeingNPC()
+    {
+        helpMeFX.Play();
+        yield return new WaitForSeconds(7);
+        fleeMode = false;
+        isFleeing = false;        
+    }
+}
