@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FiringPistol : MonoBehaviour
+{
+    // my vars for aiming or not
+    public bool isAiming = false;
+    public GameObject thePlayer;
+    public AudioSource pistolShot;
+
+    //TODO-- see conflict below-possible solution and also conflict with Char control script--Idle animation
+    public static bool isFiring = false;
+
+    // add in code to allow us to bring up the distance object
+    public GameObject aimingObject;
+
+    //TODO-- raycast to shoot and access from another script
+
+    // determine how far away we are from the target
+    public static float distanceFromTarget;
+    //internal version of above so i can see it
+    public float toTarget;
+    // damage ammount
+    public int shotDamage;
+
+    // later i need to make sure we can only aim when we have the gun   
+
+    // right mouse button to aim
+    void Update()
+    {
+        RaycastHit Hit;
+
+        if (Input.GetMouseButton(1))
+        {
+            isAiming = true;
+            //new if statement for coroutine below
+            if(isFiring == false)
+            {
+                //if were not holding pistol....and use animator instead if required<>
+                thePlayer.GetComponent<Animation>().Play("Aiming1Pistol");
+                //bring up the distance object check on off
+                aimingObject.SetActive(true);
+            }
+        }
+        else
+        {
+            // thePlayer.GetComponent<Animation>().Play("Idle");
+            isAiming = false;
+            // bring up the distance object check on off
+            aimingObject.SetActive(false);           
+        }
+        //TODO ----- possible conflict with two animations playing at same time--Aiming1Pistol-- and -- Fire 1Pistol - use static bool & coroutine
+
+        //if were aiming AND pressing mouse button we should fire the pistol
+        if (isAiming == true && Input.GetMouseButtonDown(0))
+        {
+            //TODO-- raycast to shoot and to go forward-whatever i get back will go into the Hit Variable
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Hit))
+            {
+                toTarget = Hit.distance;
+                distanceFromTarget = toTarget;
+                //how much health do i assign to NPC
+                shotDamage = 20;
+                //message to different script and to start method assigned to NPC and also send Var ammount-no point script sending back if we dont need it
+                Hit.transform.SendMessage("HurtNPC", shotDamage, SendMessageOptions.DontRequireReceiver);
+            }
+
+            isFiring = true;
+            pistolShot.Play();
+            //I make sure to goto debug and tick LEGACY
+            thePlayer.GetComponent<Animation>().Play("Fire 1Pistol");
+            StartCoroutine(FireThePistol());
+        }        
+    }
+    // i need to control how quickly u can fire the weapon, so use a coroutine
+    IEnumerator FireThePistol()
+    {
+        // will wait for certain period and reactivate isfiring var
+        yield return new WaitForSeconds(0.4f);
+        isFiring = false;        
+    }
+
+}
