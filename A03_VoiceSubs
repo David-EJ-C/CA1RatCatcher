@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
+
+public class A03_VoiceSubs : MonoBehaviour
+{
+    // need to reference the subtitles
+    public GameObject subText;
+    public AudioSource voiceLine01;
+    public AudioSource voiceLine02;
+    public GameObject fullBlack;
+    public AudioSource loudBang;
+    public GameObject fadeOut;
+
+    void Start()
+    {
+        StartCoroutine(IntroSubs());
+    }
+    //timing is sequenced to look at values in cam switch script
+     IEnumerator IntroSubs()
+    {
+        yield return new WaitForSeconds(2);
+       // because were dealing with what those subtitles say, we need to declare it in the namespace
+        subText.GetComponent<TextMeshProUGUI>().text = "...So, he finally bought it...another Rat....somebody's trying to put the courts out of business";
+        voiceLine01.Play();
+        subText.SetActive(true);
+        yield return new WaitForSeconds(11);
+        subText.GetComponent<TextMeshProUGUI>().text = "";
+        yield return new WaitForSeconds(4);
+        subText.GetComponent<TextMeshProUGUI>().text = "";
+        yield return new WaitForSeconds(6);
+        loudBang.Play();
+        fullBlack.SetActive(true);
+        //yield return new WaitForSeconds(10);
+        //fullBlack.SetActive(false);
+        yield return new WaitForSeconds(5);
+        fadeOut.SetActive(true);
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(2);
+
+        //yield return new WaitForSeconds(2);
+        //subText.GetComponent<TextMeshProUGUI>().text = "So, another Rat....somebody's trying to put the courts out of business";
+        //voiceLine02.Play();
+        //yield return new WaitForSeconds(2);
+        //subText.GetComponent<TextMeshProUGUI>().text = "";
+
+    }
+
+
+}
