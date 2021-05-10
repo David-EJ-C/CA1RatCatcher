@@ -1,0 +1,55 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//[System.Serializable]
+
+public class A02_MoveChar : MonoBehaviour
+{
+    // vars for walk in animation and will use a coroutine to control flow of time
+    public AudioSource leftFoot;
+    public AudioSource rightFoot;
+    public bool stepingLeft = true;
+    public GameObject mainChar;
+    // will use a coroutine to control flow of time and steps taken
+    public int stepsTaken;
+    
+    void Start()
+    {
+        StartCoroutine(WalkSequence());
+    }
+
+    // Update contains movement in scene from 1 side to another from main character
+    void Update()
+    {
+        //movement across Z axis using timescale
+        mainChar.transform.Translate(0, 0, 0.005f * Time.timeScale);
+    }
+
+    //walking sequence
+    IEnumerator WalkSequence()
+    {
+        yield return new WaitForSeconds(0.4f);
+        //while our steps count total less than 12, repeat the same action
+        while (stepsTaken < 14)
+        {
+            yield return new WaitForSeconds(0.5f);
+            //we wait to start the next steps using bool above
+            if (stepingLeft == true)
+            {
+                leftFoot.Play();
+                stepingLeft = false;
+            }
+            else 
+            {
+                rightFoot.Play();
+                stepingLeft = true;
+            }
+            // we need to increase steps taken by 1 each time to close whe while loop
+            stepsTaken += 1;
+        }
+        // after walk sequence done, turn off character so he doesnt appear twice in 2nd cam
+        mainChar.SetActive(false);
+
+    }
+}
