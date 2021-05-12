@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NPCDestination : MonoBehaviour
+{
+    // i need another variable to determine a different location 
+    public int trigNum;
+
+    // need collider other, as whatever collides with it is the "other" Variable, so we can check the tag of variable (Can rename "other" if I want)
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NPC")
+        {
+            // 4 is link to reset back to original pos-runs from 1 section then again until 2 section, then again until 3 etc.
+            
+            if (trigNum == 4) 
+            {
+                trigNum = 0;
+            }
+
+            if (trigNum == 3)
+            {
+                this.gameObject.transform.position = new Vector3(50, 1, 12);
+                // i change trig num to equal position 3 of 4
+                trigNum = 4;
+            }
+            if (trigNum == 2)
+            {
+                this.gameObject.transform.position = new Vector3(5, 1, 14);
+                // i change trig num to equal position 2 of 4
+                trigNum = 3;
+            }
+            if (trigNum == 1)
+            {
+                this.gameObject.transform.position = new Vector3(5, 1, 92);
+                // i change trig num to equal position 1 of 4
+                trigNum = 2;
+            }
+            // if trignum equals to 0, move it to co-ords below
+            if (trigNum == 0)
+            {
+                this.gameObject.transform.position = new Vector3(63, 1, 93);
+                // i change trig num to equal position 0 of 4
+                trigNum = 1;
+            }
+
+        }
+    }    
+
+}
