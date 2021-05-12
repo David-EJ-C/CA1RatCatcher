@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NPC01Interact : MonoBehaviour
+ {
+
+    // will create an array so not to waste resources for same var
+    public AudioSource[] voiceLine;
+    //will use ontrigger enter func to kick start coroutine(Time control), but also need to disable the box collider at same time
+
+    public int lineNumber;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            StartCoroutine(NPCVoiceover());
+        }
+    }
+
+    IEnumerator NPCVoiceover()
+    {
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
+        // now generate a random number for random line, 1 more than max needed as it wont be generated as element
+        lineNumber = Random.Range(0, 3);
+        //play linenumber 0, 1 or 2 
+        voiceLine[lineNumber].Play();
+        yield return new WaitForSeconds(3);
+        //now turn box collider back on
+        this.gameObject.GetComponent<BoxCollider>().enabled = true;
+
+    }
+
+}
