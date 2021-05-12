@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NPCRandomDestination : MonoBehaviour
+{
+    // random postion to be generated with initial place to walk to
+    public int genPos;
+
+    // need collider other, as whatever collides with it is the "other" Variable, so we can check the tag of variable (Can rename "other" if I want)
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NPC")
+        {
+            genPos = Random.Range(1, 5);
+
+            // 4 is link to reset back to original pos-runs from 1 section then again until 2 section, then again until 3 etc.
+            //if (trigNum == 4) 
+           // {
+               // trigNum = 0;
+           // }
+
+            if (genPos == 4)
+            {
+                this.gameObject.transform.position = new Vector3(86, 1, 6);
+                // i change trig num to equal position 3 of 4
+                //trigNum = 4;
+            }
+            if (genPos == 3)
+            {
+                this.gameObject.transform.position = new Vector3(63, 1, 12);
+                // i change trig num to equal position 2 of 4
+                //trigNum = 3;
+            }
+            if (genPos == 2)
+            {
+                this.gameObject.transform.position = new Vector3(85, 1, 60);
+                // i change trig num to equal position 1 of 4
+                ///trigNum = 2;
+            }
+            // if trignum equals to 0, move it to co-ords below
+            if (genPos == 1)
+            {
+                this.gameObject.transform.position = new Vector3(5, 1, 12);
+                // i change trig num to equal position 0 of 4
+                //trigNum = 1; ** trig nums only for specific route
+            }
+
+        }
+    }    
+
+}
