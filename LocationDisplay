@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class LocationDisplay : MonoBehaviour
+{
+    // vars for UI element etc
+    public GameObject locationDisplay;
+    public string locationName;
+
+    // done via a trigger to prompt text
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            // TODO--------disable box collider and script so as not to trigger over and over again...
+            this.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+            locationDisplay.GetComponent<TextMeshProUGUI>().text = locationName;
+            // display animation
+            locationDisplay.GetComponent<Animator>().Play("LocationDisplay");
+            StartCoroutine(ResetLoc());
+        }
+     }
+
+    // co routine to reset the fade in out and reset animation on screen and new state set as sdefault in animation window
+    IEnumerator ResetLoc()
+    {
+        yield return new WaitForSeconds(7);
+        locationDisplay.GetComponent<Animator>().Play("New State");
+        locationName = "";
+        // TODO--------reset box collider and script...
+        this.gameObject.GetComponent<BoxCollider>().enabled = true;
+    }
+
+}
