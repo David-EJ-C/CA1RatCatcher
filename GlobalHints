@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class GlobalHints : MonoBehaviour
+{
+    // var to tell us what hint to display via various ints
+    public GameObject hintText;
+    public static int hintNumber;
+
+     // depending on hint num, reset back to 0
+    void Update()
+    {
+        if (hintNumber == 1)
+        {
+            hintNumber = 0;
+            hintText.GetComponent<TextMeshProUGUI>().text = "Hint: Mission start points can be found at the glowing Orange circles situated in the map.";
+            //after time start animination
+            hintText.GetComponent<Animator>().Play("HintFade");
+        }
+    }
+}
