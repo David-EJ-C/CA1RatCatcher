@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+public class M001 : MonoBehaviour
+{
+    // will need to reference some things such as phone, mission location, minimap, etc & be done inside co-routine as its a Sequence of events
+    public GameObject miniMapLoc;
+    public GameObject missionStartPoint;
+    public GameObject ourPhone;
+    public GameObject sentMessage;
+    public AudioSource phoneFX;
+
+    //method for when we enter trigger to start coroutine
+    void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(MissionBegin());
+    }
+
+    // will need to disable the box collider on mission start point as it will loop over and over again
+    IEnumerator MissionBegin()
+    {
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
+        miniMapLoc.SetActive(false);
+        ourPhone.SetActive(true);
+        phoneFX.Play();
+        yield return new WaitForSeconds(4);
+        sentMessage.SetActive(true);
+        yield return new WaitForSeconds(2);
+        // need to turn off the phone when mission starts
+        missionStartPoint.SetActive(false);
+        ourPhone.SetActive(false);
+    }
+
+}
