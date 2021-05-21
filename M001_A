@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class M001_A : MonoBehaviour
+{
+    // new cutscene objects
+    public GameObject tonyCam;
+    public GameObject thePlayer;
+    public GameObject fadeIn;
+    public GameObject fadeOut;
+    public GameObject subText;
+    public AudioSource tonyLine;
+
+    void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(TonyMeet());    
+    }
+
+    // Sequence of events for cutscene, and turning on/off various cams and fade-ins/outs in scene-we also dont want to repea process over and over
+    IEnumerator TonyMeet()
+    {
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
+        fadeOut.SetActive(true);
+        yield return new WaitForSeconds(2);
+        tonyCam.SetActive(true);
+        thePlayer.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        fadeIn.SetActive(true);
+        fadeOut.SetActive(false);
+        yield return new WaitForSeconds(2);
+        fadeIn.SetActive(false);
+        //tony lines
+        subText.SetActive(true);
+        tonyLine.Play();
+        yield return new WaitForSeconds(7);
+        subText.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        fadeOut.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        tonyCam.SetActive(false);
+        thePlayer.SetActive(true);
+        //yield return new WaitForSeconds(0.5f);
+        fadeIn.SetActive(true);
+        fadeOut.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        fadeIn.SetActive(false);
+    }
+   
+}
