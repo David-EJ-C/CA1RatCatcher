@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class GlobalAmmo : MonoBehaviour
+{
+    // Static int for pistol shots and types and how much and ability to update UI in game
+    public static int pistolShots;
+    public GameObject ammoDisplay;
+
+    // 
+    void Update()
+    {
+        ammoDisplay.GetComponent<TextMeshProUGUI>().text = "" + pistolShots;
+    }
+    
+}
