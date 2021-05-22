@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AmmoCratePistol : MonoBehaviour
+{
+    // Ammocrate Rotation on y axis
+    int _rotationSpeed = 25;
+
+    // trigger for ammocrate ammount addinf 15 shots and to make the gameobject dissappear
+    void OnTriggerEnter(Collider other)
+    {
+        GlobalAmmo.pistolShots += 15;
+        this.gameObject.SetActive(false);
+    }
+
+        void Update()
+    {
+        // Ammocrate Rotation on y axis
+        transform.Rotate(0, _rotationSpeed * Time.deltaTime, 0);
+    }
+
+}
