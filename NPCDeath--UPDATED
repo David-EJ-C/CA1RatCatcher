@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NPCDeath : MonoBehaviour
+{
+    // vars for health etc- 20 would take 1 shot, 40 would take 2 shots, 60 would take 3 etc
+    public int npcHealth = 40;
+    //bool to determine if dead or not
+    public bool npcDead = false;
+    //NPC object
+    public GameObject npcObject;
+    // ability to disable interaction trigger on NPC after death
+    public GameObject interactionTrigger;
+
+    // TODO------solution 1 of 2 for NPC rise after being shot
+    public GameObject helpMe;
+
+    // hurt npc method
+    void HurtNPC(int shotDamage)
+    {
+        // take away 20 health from firing pistol script
+        npcHealth -= shotDamage;
+    }
+
+    // TODO----------need npc001 shot cube to constantly follow it and for death of NPC
+    void Update()
+    {
+        this.gameObject.transform.position = npcObject.transform.position;
+        if (npcHealth <= 0 && npcDead == false)
+        {
+            npcDead = true;
+            // TODO--------coroutine to allow time for npc to collapse on floor
+            StartCoroutine(EndNPC());
+        }
+    }
+    // TODO-----need to play dying anim, turn off interaction trigger, AI script and navmesh component and disable box collider on NPC and CubeShot
+    IEnumerator EndNPC()
+    {
+        // TODO--------update-23/5/2021-when npc shot wanted level stars appear-------------------**See Global Wanted script**
+        GlobalWanted.wantedLevel += 1;
+        GlobalWanted.activateStar = true;
+
+        npcObject.GetComponent<NPCAI>().enabled = false;
+        npcObject.GetComponent<NavMeshAgent>().enabled = false;
+        npcObject.GetComponent<BoxCollider>().enabled = false;
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
+        interactionTrigger.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        npcObject.GetComponent<Animator>().Play("Dying");
+
+        // TODO------solution  of 2 for NPC rise after being shot-when dying anim played it turns helpMe object off & turn off animator (3-4 secs)
+        helpMe.SetActive(false);
+        yield return new WaitForSeconds(3);
+        npcObject.GetComponent<Animator>().enabled = false;
+    }
+}
