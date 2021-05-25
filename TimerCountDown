@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+public class TimerCountDown : MonoBehaviour
+{
+    // main variable that displays the text-text wont update every single frame
+    public GameObject textDisplay;
+    public int minsLeft = 10;
+    //bool to take away time
+    public bool takingAway = false;
+
+    void Start()
+    {
+        textDisplay.GetComponent<TextMeshProUGUI>().text = "00:" + minsLeft;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (takingAway == false && minsLeft > 0)
+        {
+            StartCoroutine(TimerTake());
+        }
+    }
+    //coroutine to detect every second/min
+    IEnumerator TimerTake()
+    {
+        takingAway = true;
+        yield return new WaitForSeconds(60);
+        minsLeft -= 1;
+        if (minsLeft < 0.2f)
+        {
+            SceneManager.LoadScene("Start");
+        }
+        textDisplay.GetComponent<TextMeshProUGUI>().text = "00:" + minsLeft;
+        takingAway = false;
+    }    
+}
