@@ -1,0 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SceneSwitch : MonoBehaviour
+{
+    // method for on trigger enter to load scene on killing NPC
+    void OnTriggerEnter(Collider other)
+    {
+        SceneManager.LoadScene("Start");
+    }
+}
