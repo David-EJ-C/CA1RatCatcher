@@ -31,14 +31,14 @@ I cannot give a polygon count unfortunatley.
 The original FBXs-files also included in this package from Mixamo.
 
 
-SharePoint: ## Shared with Niall
+SharePoint: ## Shared with Niall - 17/5/2021
 https://studentdkit.sharepoint.com/sites/DavidEJCumminsARVR/SitePages/Technical-Portfolio.aspx
 
 
-OneDrive:## Shared with Niall
+OneDrive:## Shared with Niall - 28/5/2021
 https://studentdkit-my.sharepoint.com/personal/d00234093_student_dkit_ie/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fd00234093%5Fstudent%5Fdkit%5Fie%2FDocuments%2FCA1%20for%20Niall
 
-GitHub:## Shared with Niall
+GitHub:## Shared with Niall - 25-26/5/2021
 https://github.com/David-EJ-C/CA1RatCatcher/
 
 
@@ -215,6 +215,4 @@ https://youtu.be/6cvdl_7BxaA
 
 
 
-
-/
 
